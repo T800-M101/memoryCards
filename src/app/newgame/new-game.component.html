@@ -1,12 +1,12 @@
 <div class="game">
     <div>
         <label for="player1">PLAYER 1</label>
-        <input type="text">
+        <input type="text" name="player1" [(ngModel)]="player1">
     </div>
     <div>
-        <label for="player1">PLAYER 2</label>
-        <input type="text">
+        <label for="player2">PLAYER 2</label>
+        <input type="text" name="player2" [(ngModel)]="player2">
     </div>
     
-    <button type="button">LET'S PLAY</button>
+    <button type="button" (click)="play()">LET'S PLAY</button>
 </div>

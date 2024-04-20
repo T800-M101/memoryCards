@@ -72,6 +72,7 @@
     top: 100px;
     margin-left: 20px;
 }
+
 button {
     position: relative;
     top: 300px;
@@ -83,7 +84,14 @@ button {
     border-radius: 5px;
     color: #ffffff;
     font-size: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
 }
+
+button:active {
+    background-color: rgb(20, 180, 20); /* Darker color when pressed */
+    transform: translateY(2px); /* Move the button down slightly */
+  }
 
 
 

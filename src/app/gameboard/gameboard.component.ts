@@ -1,12 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, DoCheck, OnInit } from '@angular/core';
-import { data } from '../data';
+import { GameService } from '../game-service';
+import { Player } from '../player.model';
+import { Router } from '@angular/router';
 
-interface player {
-  name: string;
-  guessed: any[];
-  turn: boolean
-}
 @Component({
   selector: 'app-gameboard',
   standalone: true,
@@ -16,20 +13,13 @@ interface player {
 })
 export class GameboardComponent implements OnInit, DoCheck {
   
-  cards = [...data.cards];
-  heroes = [...data.heroes];
+  cards: any[] = [];
+  heroes: any[] = [];
   cardsToCompare: any[] = [];
-  player1: player = {
-    name: 'memo',
-    guessed: [],
-    turn: true
-  }
 
-  player2: player = {
-    name: 'Ausner',
-    guessed: [],
-    turn: false
-  }
+  player1!: Player;
+
+  player2!: Player;
   
   tie = false;
   gameOver = false;
@@ -44,31 +34,46 @@ export class GameboardComponent implements OnInit, DoCheck {
     }
     return 'NOW PLAYING';
   }
+
+  constructor(private gameService: GameService, private router: Router){}
   
   ngDoCheck(): void {
     this.compareCards();
+
     if (this.cardsGuessedCount === 9) {
       this.gameOver = true; 
     }
+
     if (this.gameOver && this.player1.guessed.length === this.player2.guessed.length){
       this.tie = true;
     }
   }
 
   ngOnInit(): void {
-    const unique = this.generateUniqueNumbers(18);
-    this.heroes.forEach((hero, index) => {
-      let position = unique[index];
-      this.cards[position].name = hero.name as string;
-      this.cards[position].url = hero.url as string;
+    const players = this.gameService.getPlayers();
+   
+    this.player1 = new Player(players.player1, true);
+    this.player2 = new Player(players.player2, false);
+
+    this.cards = this.gameService.getCards();
+    this.heroes = this.gameService.getHeroes();
+   
+    const uniqueNumbers = this.generateUniqueNumbers(18);
+    this.heroes.forEach((hero, i) => {
+      // Based on unique numbers it is set an index where data is going to be assigns to the cards
+      let index = uniqueNumbers[i];
+      
+      this.cards[index].name = hero.name as string;
+      this.cards[index].url = hero.url as string;
     })
-    console.log(this.cards)
+    
   }
   
+  // Get unique index to render new card position in new games
   generateUniqueNumbers(count: any): any {
     const uniqueNumbers: any[] = [];
     while (uniqueNumbers.length < count) {
-      const randomNumber = this.getRandomNumber();
+      const randomNumber = this.getRandomNumber(count);
       if (!uniqueNumbers.includes(randomNumber)) {
         uniqueNumbers.push(randomNumber);
       }
@@ -76,8 +81,8 @@ export class GameboardComponent implements OnInit, DoCheck {
     return uniqueNumbers;
   }
 
-  getRandomNumber(): number {
-    return Math.floor(Math.random() * 18);
+  getRandomNumber(count:number): number {
+    return Math.floor(Math.random() * count);
   }
 
   flipCard(index: number): void {
@@ -92,11 +97,16 @@ export class GameboardComponent implements OnInit, DoCheck {
   }
 
   compareCards(): void {
+    // Cars are compared until 2 have been clicked
     if (this.cardsToCompare.length === 2 && (this.cardsToCompare[0].flipped && this.cardsToCompare[1].flipped) ) {
       if (this.cardsToCompare[0].name === this.cardsToCompare[1].name) {
+        // Count of cards guessed by either player
         this.cardsGuessedCount++;
+
         this.cards[this.cardsToCompare[0].index].guessed = true;
         this.cards[this.cardsToCompare[1].index].guessed = true;
+        
+        // Store the name of the card guessed by each player
          if( this.player1.turn) {
           this.player1.guessed.push(this.cardsToCompare[0].name);
          }
@@ -104,6 +114,7 @@ export class GameboardComponent implements OnInit, DoCheck {
          if( this.player2.turn) {
           this.player2.guessed.push(this.cardsToCompare[0].name);
          }
+         // It is reset to start again each attempt
         this.cardsToCompare = [];
       } else {
         setTimeout(()=> {
@@ -119,19 +130,8 @@ export class GameboardComponent implements OnInit, DoCheck {
    
   }
 
-  startOver(): void {
-    this.player1.guessed = [];
-    this.player1.name = '';
-    this.player1.turn = true;
-    this.player2.guessed = [];
-    this.player2.name = '';
-    this.player2.turn = false;
-    this.cards = [...data.cards];
-    this.heroes = [...data.heroes];
-    this.cardsToCompare = [];
-    this.tie = false;
-    this.gameOver = false;
-    this.cardsGuessedCount = 0;
+  startOver(): void {  
+    this.router.navigate(['']);
   }
 
 }
