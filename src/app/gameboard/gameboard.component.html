@@ -13,7 +13,7 @@
 <div class="board">
 
     <div class="card" *ngFor="let card of cards; let i = index"  [ngClass]="{'flipped': card.flipped}" (click)="flipCard(i)">
-        <img [src]="card.url" *ngIf="card.flipped">
+        <img [src]="card.url" *ngIf="card.flipped" [ngClass]="{'guessed' : card.guessed}">
     </div> 
 
 </div>

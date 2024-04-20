@@ -1,24 +1,24 @@
 export const data = {
 
 cards: [
-        {name: '', url: '', active: false, flipped: false},
-        {name: '', url: '', active: false, flipped: false},
-        {name: '', url: '', active: false, flipped: false},
-        {name: '', url: '', active: false, flipped: false},
-        {name: '', url: '', active: false, flipped: false},
-        {name: '', url: '', active: false, flipped: false},
-        {name: '', url: '', active: false, flipped: false},
-        {name: '', url: '', active: false, flipped: false},
-        {name: '', url: '', active: false, flipped: false},
-        {name: '', url: '', active: false, flipped: false},
-        {name: '', url: '', active: false, flipped: false},
-        {name: '', url: '', active: false, flipped: false},
-        {name: '', url: '', active: false, flipped: false},
-        {name: '', url: '', active: false, flipped: false},
-        {name: '', url: '', active: false, flipped: false},
-        {name: '', url: '', active: false, flipped: false},
-        {name: '', url: '', active: false, flipped: false},
-        {name: '', url: '', active: false, flipped: false}
+        {name: '', url: '', active: false, flipped: false, guessed: false},
+        {name: '', url: '', active: false, flipped: false, guessed: false},
+        {name: '', url: '', active: false, flipped: false, guessed: false},
+        {name: '', url: '', active: false, flipped: false, guessed: false},
+        {name: '', url: '', active: false, flipped: false, guessed: false},
+        {name: '', url: '', active: false, flipped: false, guessed: false},
+        {name: '', url: '', active: false, flipped: false, guessed: false},
+        {name: '', url: '', active: false, flipped: false, guessed: false},
+        {name: '', url: '', active: false, flipped: false, guessed: false},
+        {name: '', url: '', active: false, flipped: false, guessed: false},
+        {name: '', url: '', active: false, flipped: false, guessed: false},
+        {name: '', url: '', active: false, flipped: false, guessed: false},
+        {name: '', url: '', active: false, flipped: false, guessed: false},
+        {name: '', url: '', active: false, flipped: false, guessed: false},
+        {name: '', url: '', active: false, flipped: false, guessed: false},
+        {name: '', url: '', active: false, flipped: false, guessed: false},
+        {name: '', url: '', active: false, flipped: false, guessed: false},
+        {name: '', url: '', active: false, flipped: false, guessed: false}
       ],
 
 
