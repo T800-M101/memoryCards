@@ -1,19 +1,36 @@
-<div class="game-header">
-    <div class="player">
-        <h2>Player 1</h2>
-        <h3>Guessed cards:</h3>
-
+<div class="game">
+    <div class="game-header">
+        <div class="player one">
+            <p class="playing" [ngClass]="{'active': !player1.turn}" *ngIf="!tie">{{ gameStatus }}</p>
+            <h2>Player 1: <span class="info">{{ player1.name | titlecase }}</span></h2>
+            <h2>Cards:</h2> 
+            <div>
+                <ul>
+                    <li class="card-guessed" *ngFor="let card of player1.guessed">{{card}}</li>
+                </ul>
+            </div>
+            <h2>Points: <span class="info">{{player1.guessed.length}}</span></h2> 
+        </div>
+        <p *ngIf="tie" class="tie">THIS IS A TIE</p>
+        <div class="player two">
+            <p class="playing" [ngClass]="{'active': !player2.turn}" *ngIf="!tie">{{ gameStatus }}</p>
+            <h2>Player 2: <span class="info">{{ player2.name | titlecase }}</span></h2>
+            <h2>Cards:</h2>
+            <div>
+                <ul>
+                    <li class="card-guessed" *ngFor="let card of player2.guessed">{{card}}</li>
+                </ul>
+            </div>
+            <h2>Points: <span class="info">{{player2.guessed.length}}</span></h2>
+        </div>
+        <button type="button" (click)="startOver()">START OVER</button>
     </div>
-    <div class="player">
-        <h2>Player 2</h2>
-        <h3>Guessed cards:</h3>
+    
+    <div class="game-board">
+    
+        <div class="card" *ngFor="let card of cards; let i = index"  [ngClass]="{'flipped': card.flipped}" (click)="flipCard(i)">
+            <img [src]="card.url" *ngIf="card.flipped" [ngClass]="{'guessed' : card.guessed}">
+        </div> 
+    
     </div>
-</div>
-
-<div class="board">
-
-    <div class="card" *ngFor="let card of cards; let i = index"  [ngClass]="{'flipped': card.flipped}" (click)="flipCard(i)">
-        <img [src]="card.url" *ngIf="card.flipped" [ngClass]="{'guessed' : card.guessed}">
-    </div> 
-
 </div>

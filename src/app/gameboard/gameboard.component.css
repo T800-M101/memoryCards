@@ -1,38 +1,111 @@
+
+
+body {
+    background-color: black;
+ }
+
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
-}
+} 
 
-:host {
+
+ :host {
     display: block;
+    height: 100%;
     width: 100%;
-}
+} 
 
+.game {
+    display: flex;
+    width: 100vw;
+    height: 98vh;
+    max-width:100%;
+}
 
 .game-header {
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    justify-content:space-around;
+    width: 13%;
+    height: 100%;
     background-color: yellow;
-    width: 65%;
-    height: 100px;
-    padding: 20px;
 }
 
 .player {
-
+    position: absolute;
+    margin-left: 10px;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 190px;
+    height: 250px;
 }
 
-.board {
+.one {
+    top: 10px;
+}
+
+.two {
+    top:350px
+}
+
+.active {
+    visibility:hidden;
+}
+
+.playing {
+    color: red;
+    font-weight:bold;
+    margin-top: 10px;
+    margin-left: 30px;
+}
+
+.info {
+    color: green;
+}
+
+.tie {
+    position: relative;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+    top: 100px;
+    margin-left: 20px;
+}
+button {
+    position: relative;
+    top: 300px;
+    left: 37px;
+    width: 75%;
+    height: 55px;
+    background-color: green;
+    border: none;
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 30px;
+}
+
+
+
+.card-guessed {
+    color: black;
+    margin-left: 50px;
+    color: green;
+}
+
+.game-board {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: repeat(3, 1fr);
     gap: 10px 5px;
-    width:65%;
+    width:87%;
     background-color: orange;
-    height: 850px;
-    padding-top: 10px;
+    height: 100%;
 }
 
 .flipped {
