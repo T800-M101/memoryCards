@@ -1,0 +1,67 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+:host {
+    display: block;
+    width: 100%;
+}
+
+
+.game-header {
+    display: flex;
+    justify-content: space-around;
+    background-color: yellow;
+    width: 65%;
+    height: 100px;
+    padding: 20px;
+}
+
+.player {
+
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px 5px;
+    width:65%;
+    background-color: orange;
+    height: 850px;
+    padding-top: 10px;
+}
+
+.flipped {
+    transform: rotateY(180deg);
+}
+
+
+.card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 250px;
+    margin: auto;
+    background-color: #ffffff;
+    /* background-image: url('../../assets/cap.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center; */
+    border: solid 1px #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+}
+
+
+.card img {
+    width: 100%;
+    height: auto;
+}

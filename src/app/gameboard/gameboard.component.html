@@ -1,0 +1,19 @@
+<div class="game-header">
+    <div class="player">
+        <h2>Player 1</h2>
+        <h3>Guessed cards:</h3>
+
+    </div>
+    <div class="player">
+        <h2>Player 2</h2>
+        <h3>Guessed cards:</h3>
+    </div>
+</div>
+
+<div class="board">
+
+    <div class="card" *ngFor="let card of cards; let i = index"  [ngClass]="{'flipped': card.flipped}" (click)="flipCard(i)">
+        <img [src]="card.url" *ngIf="card.flipped">
+    </div> 
+
+</div>
