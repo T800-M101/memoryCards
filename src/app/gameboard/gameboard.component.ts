@@ -87,7 +87,7 @@ export class GameboardComponent implements OnInit, DoCheck {
   }
 
   flipCard(index: number): void {
-    if (this.cards[index].guessed) return;
+    if (this.cards[index].guessed || this.cards[index].flipped || this.cardsToCompare.length === 2) return;
     this.cards[index].flipped = !this.cards[index].flipped;
     const card = {
       name: this.cards[index].name,
