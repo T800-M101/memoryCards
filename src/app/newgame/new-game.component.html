@@ -1,12 +1,26 @@
-<div class="game">
-    <div>
-        <label for="player1">PLAYER 1</label>
-        <input type="text" name="player1" [(ngModel)]="player1">
+<form name="form" id="form" #playersForm="ngForm" (ngSubmit)="play()">
+    <div class="game">
+        <div>
+            <label for="player1">PLAYER 1</label>
+            <input type="text" name="player1" [(ngModel)]="players.player1" #player1="ngModel"
+                [ngStyle]="player1.invalid && (player1.dirty || player1.touched) ? {'border' : 'solid 2px red'} : {}"
+                maxlength="10" required="true">
+            <p *ngIf="player1.invalid && (player1.dirty || player1.touched)"
+                [ngStyle]="player1.invalid && (player1.dirty || player1.touched) ? {'color' : 'red'} : {}">
+                Please provide your name
+            </p>
+        </div>
+        <div>
+            <label for="player2">PLAYER 2</label>
+            <input type="text" name="player2" [(ngModel)]="players.player2" #player2="ngModel"
+                [ngStyle]="player2.invalid && (player2.dirty || player2.touched) ? {'border' : 'solid 2px red'} : {}"
+                maxlength="10" required="true">
+            <p *ngIf="player2.invalid && (player2.dirty || player2.touched)"
+                [ngStyle]="player2.invalid && (player2.dirty || player2.touched) ? {'color' : 'red'} : {}">
+                Please provide your name
+            </p>
+        </div>
+
+        <button type="submit" [disabled]="!playersForm.valid">{{getButton(playersForm.valid)}}</button>
     </div>
-    <div>
-        <label for="player2">PLAYER 2</label>
-        <input type="text" name="player2" [(ngModel)]="player2">
-    </div>
-    
-    <button type="button" (click)="play()">LET'S PLAY</button>
-</div>
+</form>

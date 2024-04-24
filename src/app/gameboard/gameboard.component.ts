@@ -17,20 +17,19 @@ export class GameboardComponent implements OnInit, DoCheck {
   player1!: Player;
   player2!: Player;
   tie = false;
+  player1Counter: string[] = [];
+  player2Counter: string[] = [];
 
   private heroes: any[] = [];
-  private cardsToCompare: any[] = [];
+  private cardsFlippedIndexes: any[] = [];
   private gameOver = false;
-  private cardsGuessedCount = 0;
-
-
-
+  private cardsFlipped = 0;
 
   get gameStatus(): string {
-    if (this.gameOver && this.player1.turn && this.player1.guessed.length > this.player2.guessed.length) {
+    if (this.gameOver && this.player1.turn && this.player1Counter.length > this.player2Counter.length) {
       return 'WINNER';
     }
-    if (this.gameOver && this.player2.turn && this.player2.guessed.length > this.player1.guessed.length) {
+    if (this.gameOver && this.player2.turn && this.player2Counter.length > this.player2Counter.length) {
       return 'WINNER';
     }
     return 'NOW PLAYING';
@@ -39,13 +38,11 @@ export class GameboardComponent implements OnInit, DoCheck {
   constructor(private gameService: GameService, private router: Router) { }
 
   ngDoCheck(): void {
-    this.compareCards();
-
-    if (this.cardsGuessedCount === 9) {
+    if (this.player1Counter.length + this.player2Counter.length  === 9) {
       this.gameOver = true;
     }
 
-    if (this.gameOver && this.player1.guessed.length === this.player2.guessed.length) {
+    if (this.gameOver && this.player1Counter.length === this.player2Counter.length) {
       this.tie = true;
     }
   }
@@ -86,48 +83,62 @@ export class GameboardComponent implements OnInit, DoCheck {
     return Math.floor(Math.random() * count);
   }
 
+
   flipCard(index: number): void {
-    if (this.cards[index].guessed || this.cards[index].flipped || this.cardsToCompare.length === 2) return;
-    this.cards[index].flipped = !this.cards[index].flipped;
-    const card = {
-      name: this.cards[index].name,
-      flipped: this.cards[index].flipped,
-      index
+    // Avoid card already guessed being clicked twice
+    if (!this.cards[index].flipped) {
+      this.cardsFlipped++;
+    } else {
+      return
     }
-    this.cardsToCompare.push(card);
+
+    // Prevent a third card being clicked before compare the first 2 or pick when the game is over
+    if (this.cardsFlipped > 2 || this.gameOver) return;
+
+    // Flip card
+    this.cards[index].flipped = !this.cards[index].flipped;
+
+    // Pick up 2 cards to compare
+    if ( this.cards[index].flipped) {
+      this.cardsFlippedIndexes.push(index);
+    }
+
+    if(this.cardsFlippedIndexes.length === 2) {
+      this.compareCards();
+    }
+   
   }
 
   private compareCards(): void {
-    // Cars are compared until 2 have been clicked
-    if (this.cardsToCompare.length === 2 && (this.cardsToCompare[0].flipped && this.cardsToCompare[1].flipped)) {
-      if (this.cardsToCompare[0].name === this.cardsToCompare[1].name) {
-        // Count of cards guessed by either player
-        this.cardsGuessedCount++;
+    // Cars are compared once 2 have been clicked
+    if (this.cards[this.cardsFlippedIndexes[0]].name === this.cards[this.cardsFlippedIndexes[1]].name) {
 
-        this.cards[this.cardsToCompare[0].index].guessed = true;
-        this.cards[this.cardsToCompare[1].index].guessed = true;
-
-        // Store the name of the card guessed by each player
-        if (this.player1.turn) {
-          this.player1.guessed.push(this.cardsToCompare[0].name);
-        }
-
-        if (this.player2.turn) {
-          this.player2.guessed.push(this.cardsToCompare[0].name);
-        }
-        // It is reset to start again each attempt
-        this.cardsToCompare = [];
-      } else {
-        setTimeout(() => {
-          this.cards[this.cardsToCompare[0].index].flipped = false;
-          this.cards[this.cardsToCompare[1].index].flipped = false;
-          this.player1.turn = !this.player1.turn;
-          this.player2.turn = !this.player2.turn;
-          this.cardsToCompare = [];
+      this.cards[this.cardsFlippedIndexes[0]].guessed = true;
+      this.cards[this.cardsFlippedIndexes[1]].guessed = true;
+      // Count of cards guessed by either player
+      if (this.player1.turn) {
+        this.player1Counter.push(this.cards[this.cardsFlippedIndexes[0]].name);
+      }
+      
+      if (this.player2.turn) {
+        this.player2Counter.push(this.cards[this.cardsFlippedIndexes[0]].name);
+      }
+      
+      this.cardsFlippedIndexes = [];
+      this.cardsFlipped = 0;
+      
+      
+    } else {
+      // Reset cards for next turn
+      setTimeout(() => {
+        this.cards[this.cardsFlippedIndexes[0]].flipped = false;
+        this.cards[this.cardsFlippedIndexes[1]].flipped = false;
+        this.player1.turn = !this.player1.turn;
+        this.player2.turn = !this.player2.turn;
+        this.cardsFlippedIndexes = [];
+        this.cardsFlipped = 0;
         }, 1000)
       }
-
-    }
 
   }
 

@@ -6,10 +6,10 @@
             <h2>Cards:</h2> 
             <div>
                 <ul>
-                    <li class="card-guessed" *ngFor="let card of player1.guessed">{{card}}</li>
+                    <li class="card-guessed" *ngFor="let card of player1Counter">{{card}}</li>
                 </ul>
             </div>
-            <h2>Points: <span class="info">{{player1.guessed.length}}</span></h2> 
+            <h2>Points: <span class="info">{{player1Counter.length}}</span></h2> 
         </div>
         <p *ngIf="tie" class="tie">THIS IS A TIE</p>
         <div class="player two">
@@ -18,10 +18,10 @@
             <h2>Cards:</h2>
             <div>
                 <ul>
-                    <li class="card-guessed" *ngFor="let card of player2.guessed">{{card}}</li>
+                    <li class="card-guessed" *ngFor="let card of player2Counter">{{card}}</li>
                 </ul>
             </div>
-            <h2>Points: <span class="info">{{player2.guessed.length}}</span></h2>
+            <h2>Points: <span class="info">{{player2Counter.length}}</span></h2>
         </div>
         <button type="button" (click)="startOver()">START OVER</button>
     </div>

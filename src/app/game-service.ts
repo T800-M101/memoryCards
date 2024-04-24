@@ -111,9 +111,9 @@ private heroes = [
 
   constructor() { }
 
-  setPlayers(player1:string, player2: string): void {
-    this.players.player1 = player1.substring(0,10);
-    this.players.player2 = player2.substring(0,10);
+  setPlayers(players:any): void {
+    this.players.player1 = players.player1;
+    this.players.player2 = players.player2;
   }
 
   getPlayers(): any {
